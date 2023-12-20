@@ -1,6 +1,7 @@
 import logging
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
+
 from database_manager import DatabaseManager
 
 logging.basicConfig(level=logging.INFO)
@@ -8,16 +9,56 @@ logger = logging.getLogger(__name__)
 
 
 class DataExporterXml:
+    """
+    Класс для экспорта данных из базы данных в формат XML.
+
+    Args:
+        db_manager (DatabaseManager): Менеджер базы данных для работы с данными.
+
+    Methods:
+        prettify(elem) -> str:
+            Возвращает красиво отформатированную XML-строку для элемента.
+
+        export_rooms_data(output_file: str) -> None:
+            Экспортирует данные о комнатах в файл XML.
+
+        export_students_data(output_file: str) -> None:
+            Экспортирует данные о студентах в файл XML.
+
+        export_data_from_db(output_rooms_file: str, output_students_file: str) -> None:
+            Экспортирует данные о комнатах и студентах из базы данных в файлы XML.
+    """
+
     def __init__(self, db_manager: DatabaseManager):
+        """
+        Инициализирует экземпляр класса DataExporterXml.
+
+        Args:
+            db_manager (DatabaseManager): Менеджер базы данных для работы с данными.
+        """
         self.db_manager = db_manager
 
     def prettify(self, elem):
-        """Return a pretty-printed XML string for the Element."""
+        """
+        Возвращает красиво отформатированную XML-строку для элемента.
+
+        Args:
+            elem: Элемент XML.
+
+        Returns:
+            str: Красиво отформатированная XML-строка.
+        """
         rough_string = ET.tostring(elem, 'utf-8')
         reparsed = minidom.parseString(rough_string)
         return reparsed.toprettyxml(indent="    ")
 
     def export_rooms_data(self, output_file: str) -> None:
+        """
+        Экспортирует данные о комнатах в файл XML.
+
+        Args:
+            output_file (str): Путь к файлу для сохранения данных.
+        """
         logger.info(f"Exporting rooms data to file: {output_file}")
         with self.db_manager as db:
             with db.conn.cursor() as cursor:
@@ -36,6 +77,12 @@ class DataExporterXml:
             file.write(self.prettify(root))
 
     def export_students_data(self, output_file: str) -> None:
+        """
+        Экспортирует данные о студентах в файл XML.
+
+        Args:
+            output_file (str): Путь к файлу для сохранения данных.
+        """
         logger.info(f"Exporting students data to file: {output_file}")
         with self.db_manager as db:
             with db.conn.cursor() as cursor:
@@ -60,6 +107,13 @@ class DataExporterXml:
             file.write(self.prettify(root))
 
     def export_data_from_db(self, output_rooms_file: str, output_students_file: str) -> None:
+        """
+        Экспортирует данные о комнатах и студентах из базы данных в файлы XML.
+
+        Args:
+            output_rooms_file (str): Путь к файлу для сохранения данных о комнатах.
+            output_students_file (str): Путь к файлу для сохранения данных о студентах.
+        """
         logger.info("Exporting data from the database...")
         self.export_rooms_data(output_rooms_file)
         self.export_students_data(output_students_file)

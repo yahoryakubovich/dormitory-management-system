@@ -1,11 +1,26 @@
 import argparse
-from config import DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT
-from database_manager import DatabaseManager
+
+from config import DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER
 from data_exporter_json import DataExporterJson
 from data_exporter_xml import DataExporterXml
+from database_manager import DatabaseManager
 
 
 def main():
+    """
+    Основная функция скрипта для экспорта данных из базы данных в различные форматы.
+
+    Использует argparse для обработки командной строки, а также классы DataExporterJson и DataExporterXml
+    для экспорта данных в форматах JSON и XML соответственно.
+
+    Command-line Arguments:
+        export_format (str): Формат экспорта данных ('json' или 'xml').
+
+    Usage:
+        Примеры запуска из командной строки:
+        python main.py json
+        python main.py xml
+    """
     parser = argparse.ArgumentParser(description='Export data from the database in different formats.')
     parser.add_argument('export_format', choices=['json', 'xml'], help='Export format (json or xml)')
 

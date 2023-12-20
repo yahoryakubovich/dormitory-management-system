@@ -7,11 +7,39 @@ logger = logging.getLogger(__name__)
 
 
 class DataExporterJson:
+    """
+    Класс для экспорта данных из базы данных в формат JSON.
+
+    Args:
+        db_manager (DatabaseManager): Менеджер базы данных для работы с данными.
+
+    Methods:
+        export_rooms_data(output_file: str) -> None:
+            Экспортирует данные о комнатах в файл JSON.
+
+        export_students_data(output_file: str) -> None:
+            Экспортирует данные о студентах в файл JSON.
+
+        export_data_from_db(output_rooms_file: str, output_students_file: str) -> None:
+            Экспортирует данные о комнатах и студентах из базы данных в файлы JSON.
+    """
+
     def __init__(self, db_manager: DatabaseManager):
+        """
+        Инициализирует экземпляр класса DataExporterJson.
+
+        Args:
+            db_manager (DatabaseManager): Менеджер базы данных для работы с данными.
+        """
         self.db_manager = db_manager
 
     def export_rooms_data(self, output_file: str) -> None:
-        logger.info(f"Exporting rooms data to file: {output_file}")
+        """
+        Экспортирует данные о комнатах в файл JSON.
+
+        Args:
+            output_file (str): Путь к файлу для сохранения данных.
+        """
         with self.db_manager as db:
             with db.conn.cursor() as cursor:
                 cursor.execute("SELECT * FROM rooms;")
@@ -29,7 +57,12 @@ class DataExporterJson:
             json.dump(formatted_rooms_data, rooms_file, default=str, indent=2)
 
     def export_students_data(self, output_file: str) -> None:
-        logger.info(f"Exporting students data to file: {output_file}")
+        """
+        Экспортирует данные о студентах в файл JSON.
+
+        Args:
+            output_file (str): Путь к файлу для сохранения данных.
+        """
         with self.db_manager as db:
             with db.conn.cursor() as cursor:
                 cursor.execute("SELECT * FROM students;")
@@ -50,7 +83,12 @@ class DataExporterJson:
             json.dump(formatted_students_data, students_file, default=str, indent=2)
 
     def export_data_from_db(self, output_rooms_file: str, output_students_file: str) -> None:
-        logger.info("Exporting data from the database...")
+        """
+        Экспортирует данные о комнатах и студентах из базы данных в файлы JSON.
+
+        Args:
+            output_rooms_file (str): Путь к файлу для сохранения данных о комнатах.
+            output_students_file (str): Путь к файлу для сохранения данных о студентах.
+        """
         self.export_rooms_data(output_rooms_file)
         self.export_students_data(output_students_file)
-        logger.info("Data export completed.")
