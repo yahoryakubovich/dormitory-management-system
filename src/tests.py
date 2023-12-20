@@ -1,10 +1,11 @@
-import unittest
 import json
 import sqlite3
-from unittest.mock import patch, MagicMock
-from config import DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT
-from database_manager import DatabaseManager
+import unittest
+from unittest.mock import MagicMock, patch
+
+from config import DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER
 from data_exporter_json import DataExporterJson
+from database_manager import DatabaseManager
 
 
 class TestDatabaseManager(unittest.TestCase):
