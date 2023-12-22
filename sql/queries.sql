@@ -1,3 +1,18 @@
+-- Создание таблиц one-to-many
+
+CREATE TABLE rooms (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE students (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    birthday DATE NOT NULL,
+    sex CHAR(1) NOT NULL,
+    room_id INT REFERENCES Rooms(id)
+);
+
 -- Список комнат и количество студентов в каждой из них
 
 CREATE INDEX idx_students_room_id ON students(room_id);
