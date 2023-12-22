@@ -1,7 +1,6 @@
 import logging
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
-
 from database_manager import DatabaseManager
 
 logging.basicConfig(level=logging.INFO)
