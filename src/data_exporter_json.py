@@ -40,6 +40,7 @@ class DataExporterJson:
         Args:
             output_file (str): Путь к файлу для сохранения данных.
         """
+        logger.info(f"Exporting rooms data to file: {output_file}")
         with self.db_manager as db:
             with db.conn.cursor() as cursor:
                 cursor.execute("SELECT * FROM rooms;")
@@ -63,6 +64,7 @@ class DataExporterJson:
         Args:
             output_file (str): Путь к файлу для сохранения данных.
         """
+        logger.info(f"Exporting students data to file: {output_file}")
         with self.db_manager as db:
             with db.conn.cursor() as cursor:
                 cursor.execute("SELECT * FROM students;")
@@ -90,5 +92,7 @@ class DataExporterJson:
             output_rooms_file (str): Путь к файлу для сохранения данных о комнатах.
             output_students_file (str): Путь к файлу для сохранения данных о студентах.
         """
+        logger.info("Exporting data from the database...")
         self.export_rooms_data(output_rooms_file)
         self.export_students_data(output_students_file)
+        logger.info("Data export completed.")
