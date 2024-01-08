@@ -42,11 +42,26 @@ python data_loader.py /path/to/rooms.json /path/to/students.json
 Export data from the database to JSON and XML files:
 
 ```bash
-python main.py json
+python data_exporter_json.py --export_rooms_with_student_count
+python data_exporter_json.py --export_rooms_with_average_age
+python data_exporter_json.py --export_rooms_with_age_difference
+python data_exporter_json.py --export_rooms_with_multiple_sex
 ```
 
+
 ```bash
-python main.py xml
+python data_exporter_xml.py --export_rooms_with_student_count
+python data_exporter_xml.py --export_rooms_with_average_age
+python data_exporter_xml.py --export_rooms_with_age_difference
+python data_exporter_xml.py --export_rooms_with_multiple_sex
+```
+
+### Options
+```bash
+export_rooms_with_student_count - Список комнат и количество студентов в каждой из них
+export_rooms_with_average_age - 5 комнат, где самый маленький средний возраст студентов
+export_rooms_with_age_difference - 5 комнат с самой большой разницей в возрасте студентов
+export_rooms_with_multiple_sex - Список комнат где живут разнополые студенты
 ```
 
 ## License

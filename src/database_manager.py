@@ -1,6 +1,5 @@
 import logging
 from typing import Union
-
 import psycopg2
 
 
